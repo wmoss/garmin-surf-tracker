@@ -2,6 +2,7 @@ using Toybox.Application;
 using Toybox.WatchUi;
 using Toybox.Position;
 
+
 class SurfTrackerApp extends Application.AppBase {
     hidden var accelData;
 

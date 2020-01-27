@@ -1,5 +1,6 @@
 using Toybox.WatchUi;
 
+
 class PausedDelegate extends WatchUi.BehaviorDelegate {
     hidden var accelData;
 
