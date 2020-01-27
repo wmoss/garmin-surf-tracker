@@ -2,6 +2,7 @@ using Toybox.WatchUi;
 using Toybox.Time;
 using Toybox.System;
 
+
 class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
     hidden var lastKeyPressMillis = 0;
     hidden var accelData;

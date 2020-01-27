@@ -1,5 +1,6 @@
 using Toybox.WatchUi;
 
+
 class WaitForGPSDelegate extends WatchUi.InputDelegate {
     hidden var accelData;
 
