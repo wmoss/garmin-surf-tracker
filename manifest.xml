@@ -9,7 +9,9 @@
             <iq:uses-permission id="Sensor"/>
             <iq:uses-permission id="SensorLogging"/>
         </iq:permissions>
-        <iq:languages/>
+        <iq:languages>
+            <iq:language>eng</iq:language>
+        </iq:languages>
         <iq:barrels/>
     </iq:application>
 </iq:manifest>
