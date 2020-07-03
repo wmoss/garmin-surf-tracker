@@ -8,6 +8,7 @@ class SurfTrackerView extends WatchUi.View {
     hidden var accelData;
     hidden var currentTimeLabel;
     hidden var elapsedTimeLabel;
+    hidden var wavesLabel;
     hidden var timer;
 
     function initialize(accelData) {
@@ -19,6 +20,7 @@ class SurfTrackerView extends WatchUi.View {
 
     function onLayout(dc) {
         var height = dc.getHeight();
+        var width = dc.getWidth();
 
         currentTimeLabel = new WatchUi.Text({
             :color => Graphics.COLOR_WHITE,
@@ -42,7 +44,15 @@ class SurfTrackerView extends WatchUi.View {
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
         });
 
-        setLayout([currentTimeLabel, surferBitmap, elapsedTimeLabel]);
+        wavesLabel = new WatchUi.Text({
+            :color => Graphics.COLOR_WHITE,
+            :font => Graphics.FONT_NUMBER_HOT,
+            :locX => width * 0.1,
+            :locY => WatchUi.LAYOUT_VALIGN_CENTER,
+            :justification => Graphics.TEXT_JUSTIFY_LEFT,
+        });
+
+        setLayout([currentTimeLabel, surferBitmap, elapsedTimeLabel, wavesLabel]);
     }
 
     function onShow() {
@@ -60,6 +70,7 @@ class SurfTrackerView extends WatchUi.View {
         var elapsed = Time.today().add(new Time.Duration(Activity.getActivityInfo().timerTime / 1000));
         currentTimeLabel.setText(formatTime(Gregorian.info(Time.now(), Time.FORMAT_SHORT)));
         elapsedTimeLabel.setText(formatTime(Gregorian.info(elapsed, Time.FORMAT_SHORT)));
+        wavesLabel.setText(accelData.getWaveCount().format("%d"));
     }
 
     function formatTime(time) {
