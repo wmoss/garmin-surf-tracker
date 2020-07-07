@@ -18,14 +18,24 @@ class SaveDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onClickSave() {
-        WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-        WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-        WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-        return true;
+        var result = accelData.save();
+        if (result) {
+            exitByPopView();
+       }
+       return result;
     }
 
     function onClickDiscard() {
-        accelData.discard();
-        return true;
+        var result = accelData.discard();
+        if (result) {
+            exitByPopView();
+        }
+        return result;
+    }
+
+    hidden function exitByPopView() {
+        WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+        WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+        WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     }
 }

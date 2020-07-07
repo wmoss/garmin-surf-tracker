@@ -49,18 +49,16 @@ class AccelData
     }
 
     function stop() {
-        Sensor.unregisterSensorDataListener();
         running = false;
+        Sensor.unregisterSensorDataListener();
         return session.stop();
     }
 
     function save() {
-        stop();
         return session.save();
     }
 
     function discard() {
-        stop();
         return session.discard();
     }
 
