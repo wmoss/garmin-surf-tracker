@@ -6,8 +6,9 @@ using Toybox.Attention;
 
 
 class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
-    hidden var lastKeyPressMillis = 0;
     hidden const DOUBLE_PRESS_THRESHOLD = 400;
+
+    hidden var lastKeyPressMillis;
     hidden var accelData;
     hidden var buttonTimer;
 
@@ -15,6 +16,7 @@ class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
         BehaviorDelegate.initialize();
         self.accelData = accelData;
         buttonTimer = new Timer.Timer();
+        lastKeyPressMillis = System.getTimer() - DOUBLE_PRESS_THRESHOLD;
     }
 
     function onMenu() {
@@ -60,6 +62,7 @@ class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function markWave() {
+        lastKeyPressMillis = System.getTimer() - DOUBLE_PRESS_THRESHOLD;
         accelData.addWave();
         Attention.vibrate([new Attention.VibeProfile(100, 1000)]);
     }
