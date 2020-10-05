@@ -17,8 +17,13 @@ class PausedDelegate extends WatchUi.BehaviorDelegate {
         return false;
     }
 
-    function onClickDone() {
-        WatchUi.pushView(new SaveView(), new SaveDelegate(accelData), WatchUi.SLIDE_LEFT);
-          return true;
+    function onClickSave() {
+        var result = accelData.save();
+        if (result) {
+            WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+            WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+            WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+       }
+       return result;
     }
 }

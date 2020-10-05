@@ -58,10 +58,6 @@ class AccelData
         return session.save();
     }
 
-    function discard() {
-        return session.discard();
-    }
-
     function onAccelData(sensorData) {
         // use if(running) for wave tracking
 
