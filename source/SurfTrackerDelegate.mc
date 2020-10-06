@@ -52,7 +52,7 @@ class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
             var now = System.getTimer();
             if (now - lastKeyPressMillis < DOUBLE_PRESS_THRESHOLD) {
                 buttonTimer.stop();
-                WatchUi.pushView(new PausedView(), new PausedDelegate(accelData), WatchUi.SLIDE_LEFT);
+                WatchUi.switchToView(new PausedView(), new PausedDelegate(accelData), WatchUi.SLIDE_LEFT);
             } else {
                 buttonTimer.start(method(:markWave), DOUBLE_PRESS_THRESHOLD + 25, false);
             }

@@ -11,17 +11,24 @@ class PausedDelegate extends WatchUi.BehaviorDelegate {
 
     function onKey(keyEvent) {
         if (keyEvent.getKey() == KEY_ENTER) {
-            WatchUi.popView(WatchUi.SLIDE_RIGHT);
+            backToSurfTracker();
             return true;
         }
         return false;
     }
 
+    function onBack() {
+        backToSurfTracker();
+        return true;
+    }
+
+    hidden function backToSurfTracker() {
+        WatchUi.switchToView(new SurfTrackerView(accelData), new SurfTrackerDelegate(accelData), WatchUi.SLIDE_RIGHT);
+    }
+
     function onClickSave() {
         var result = accelData.save();
         if (result) {
-            WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-            WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
             WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
        }
        return result;
