@@ -54,6 +54,7 @@ class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
                 buttonTimer.stop();
                 WatchUi.switchToView(new PausedView(), new PausedDelegate(accelData), WatchUi.SLIDE_LEFT);
             } else {
+                buttonTimer.stop();
                 buttonTimer.start(method(:markWave), DOUBLE_PRESS_THRESHOLD + 25, false);
             }
             lastKeyPressMillis = now;

@@ -81,6 +81,7 @@ class SurfTrackerView extends WatchUi.View {
     }
 
     function onHide() {
+        timer.stop();
         accelData.stop();
     }
 
