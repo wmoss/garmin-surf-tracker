@@ -13,8 +13,6 @@ class AccelData
     hidden var accuracy;
     hidden var running = false;
     hidden var surfingTimeStart;
-    hidden var WAVES_FIELD_ID = 13;
-    hidden var wavesField;
     hidden var waveCount = 0;
 
     function registerEventListeners() {
@@ -35,13 +33,6 @@ class AccelData
                 :sport => ActivityRecording.SPORT_SURFING,
                 :sensorLogger => logger
             });
-            wavesField = session.createField(
-                "waves",
-                WAVES_FIELD_ID,
-                FitContributor.DATA_TYPE_UINT16,
-                {:mesgType => FitContributor.MESG_TYPE_RECORD, :units => "Waves"}
-            );
-            wavesField.setData(waveCount);
             surfingTimeStart = Time.now();
         }
         session.start();
@@ -74,7 +65,7 @@ class AccelData
 
     function addWave() {
         waveCount += 1;
-        wavesField.setData(waveCount);
+        session.addLap();
     }
 
     function getWaveCount() {
