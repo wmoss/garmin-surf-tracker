@@ -56,8 +56,7 @@ class SurfTrackerView extends WatchUi.View {
     }
 
     function onShow() {
-        accelData.start();
-        timer.start(method(:requestUpdate), 1000, true);
+        timer.start(method(:requestUpdate), 2000, true);
     }
 
     function requestUpdate() {
@@ -82,7 +81,5 @@ class SurfTrackerView extends WatchUi.View {
 
     function onHide() {
         timer.stop();
-        accelData.stop();
     }
-
 }

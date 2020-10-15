@@ -6,7 +6,6 @@ using Toybox.Time;
 using Toybox.FitContributor;
 
 
-
 class AccelData
 {
     hidden var session = null;
@@ -14,6 +13,11 @@ class AccelData
     hidden var running = false;
     hidden var surfingTimeStart;
     hidden var waveCount = 0;
+    hidden var points;
+
+    function initialize() {
+        points = new GPSPointArray();
+    }
 
     function registerEventListeners() {
         Position.enableLocationEvents(Position.LOCATION_CONTINUOUS, method(:onPositionData));
@@ -60,7 +64,11 @@ class AccelData
     function onPositionData(info) {
         accuracy = info.accuracy;
 
-        // use if(running) for wave tracking
+        if (running) {
+            if (info.accuracy >= Position.QUALITY_USABLE) {
+                points.add(info.position.toDegrees());
+            }
+        }
     }
 
     function addWave() {
@@ -78,5 +86,9 @@ class AccelData
 
     function getSurfingTime() {
         return Time.now().subtract(surfingTimeStart);
+    }
+
+    function getPoints() {
+        return points;
     }
 }
