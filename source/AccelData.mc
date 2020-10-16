@@ -9,7 +9,7 @@ using Toybox.FitContributor;
 class AccelData
 {
     hidden var session = null;
-    hidden var accuracy;
+    hidden var accuracy = Position.QUALITY_NOT_AVAILABLE;
     hidden var running = false;
     hidden var surfingTimeStart;
     hidden var waveCount = 0;

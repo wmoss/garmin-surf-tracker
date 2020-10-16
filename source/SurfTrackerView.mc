@@ -70,6 +70,10 @@ class SurfTrackerView extends WatchUi.View {
         currentTimeLabel.setText(formatTime(Gregorian.info(Time.now(), Time.FORMAT_SHORT)));
         elapsedTimeLabel.setText(formatTime(Gregorian.info(elapsed, Time.FORMAT_SHORT)));
         wavesLabel.setText(accelData.getWaveCount().format("%d"));
+
+        dc.setColor(getGPSAccuracyColor(accelData.getAccuracy()), Graphics.COLOR_BLACK);
+        dc.fillCircle(dc.getWidth() - 12, dc.getHeight() / 2, 10);
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
     }
 
     function formatTime(time) {
@@ -81,5 +85,16 @@ class SurfTrackerView extends WatchUi.View {
 
     function onHide() {
         timer.stop();
+    }
+
+    function getGPSAccuracyColor(accuracy) {
+        switch (accuracy) {
+            case Position.QUALITY_GOOD:
+              return Graphics.COLOR_DK_GREEN;
+            case Position.QUALITY_USABLE:
+              return Graphics.COLOR_YELLOW;
+            default:
+              return Graphics.COLOR_DK_RED;
+        }
     }
 }
