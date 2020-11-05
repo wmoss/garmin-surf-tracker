@@ -45,18 +45,18 @@ class GPSTrackView extends WatchUi.View {
         for (var i = 1; i < points.getCount(); i++) {
             var point = points.get(i);
 
-            var y1 = (point[0] - points.lat_min) / (points.lat_max - points.lat_min) * width + width_offset;
-            var x1 = (point[1] - points.lng_min) / (points.lng_max - points.lng_min) * height + height_offset;
-            var y2 = (previous[0] - points.lat_min) / (points.lat_max - points.lat_min) * width + width_offset;
-            var x2 = (previous[1] - points.lng_min) / (points.lng_max - points.lng_min) * height + height_offset;
+            var y1 = scaleY(point, points, height, height_offset);
+            var x1 = scaleX(point, points, width, width_offset);
+            var y2 = scaleY(previous, points, height, height_offset);
+            var x2 = scaleX(previous, points, width, width_offset);
 
             dc.drawLine(x1, y1, x2, y2);
 
             previous = point;
         }
 
-        var y1 = (previous[0] - points.lat_min) / (points.lat_max - points.lat_min) * width + width_offset;
-        var x1 = (previous[1] - points.lng_min) / (points.lng_max - points.lng_min) * height + height_offset;
+        var y1 = scaleY(previous, points, height, height_offset);
+        var x1 = scaleX(previous, points, width, width_offset);
         dc.fillCircle(x1, y1, 4);
     }
 
@@ -64,4 +64,11 @@ class GPSTrackView extends WatchUi.View {
         timer.stop();
     }
 
+    function scaleX(point, points, width, offset) {
+        return (point[1] - points.lng_min) / (points.lng_max - points.lng_min) * width + offset;
+    }
+
+    function scaleY(point, points, height, offset) {
+        return height - (point[0] - points.lat_min) / (points.lat_max - points.lat_min) * height + offset;
+    }
 }
