@@ -1,22 +1,22 @@
-using Toybox.WatchUi;
 using Toybox.System;
 using Toybox.Timer;
 
 
-class GPSTrackView extends WatchUi.View {
+class GPSTrackView extends TimeTrackerView {
     hidden const SCREEN_USE_PERCENT = 0.7;
 
     hidden var accelData;
     hidden var timer;
 
     function initialize(accelData) {
-        View.initialize();
+        TimeTrackerView.initialize();
 
         self.accelData = accelData;
         timer = new Timer.Timer();
     }
 
     function onLayout(dc) {
+        setLayout(createTimeLabels(dc));
     }
 
     function onShow() {
@@ -29,6 +29,8 @@ class GPSTrackView extends WatchUi.View {
 
     function onUpdate(dc) {
         View.onUpdate(dc);
+
+        updateTimeLabels();
 
         var points = accelData.getPoints();
         if (points.getCount() <= 1) { return; }
