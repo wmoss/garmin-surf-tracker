@@ -5,7 +5,7 @@ using Toybox.Timer;
 using Toybox.Attention;
 
 
-class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
+class SurfTrackerDelegate extends WatchUi.InputDelegate {
     hidden const DOUBLE_PRESS_THRESHOLD = 400;
     hidden const TRIPLE_PRESS_THRESHOLD = 2 * DOUBLE_PRESS_THRESHOLD;
 
@@ -30,56 +30,51 @@ class SurfTrackerDelegate extends WatchUi.BehaviorDelegate {
         page = 0;
     }
 
-    function onMenu() {
+    /* Disable all screen touch events */
+    function onHold(clickEvent) {
         return true;
     }
 
-    function onPreviousPage() {
+    function onRelease(clickEvent) {
         return true;
     }
 
-    function onNextPage() {
+    function onSelectable(selectableEvent){
         return true;
     }
 
-    function onPreviousMode() {
+    function onSwipe(swipeEvent) {
         return true;
     }
 
-    function onBack() {
-        return true;
-    }
-
-    function onNextMode() {
-        return true;
-    }
-
-    function onSelect() {
+    function onTap(clickEvent){
         return true;
     }
 
     /*
-     * Single press => Mark wave
-     * Double press => Switch page
-     * Triple press => Pause
+     * Lap => Mark wave
+     * Enter single press => Switch page
+     * Enter double press => Pause / end
      */
     function onKey(keyEvent) {
         if (keyEvent.getKey() == KEY_ENTER) {
             var now = System.getTimer();
-            if ((now - lastKeyPressMillis < DOUBLE_PRESS_THRESHOLD) && (now - penultimateKeyPressMillis < TRIPLE_PRESS_THRESHOLD)) {
+            if (now - lastKeyPressMillis < DOUBLE_PRESS_THRESHOLD) {
                 buttonTimer.stop();
                 WatchUi.switchToView(new PausedView(), new PausedDelegate(accelData), WatchUi.SLIDE_LEFT);
-            } else if (now - lastKeyPressMillis < DOUBLE_PRESS_THRESHOLD) {
+            } else  {
                 penultimateKeyPressMillis = lastKeyPressMillis;
                 buttonTimer.stop();
                 buttonTimer.start(method(:changePage), DOUBLE_PRESS_THRESHOLD + 5, false);
-            } else {
-                buttonTimer.stop();
-                buttonTimer.start(method(:markWave), DOUBLE_PRESS_THRESHOLD + 5, false);
             }
             lastKeyPressMillis = now;
+            return true;
+        } else if (keyEvent.getKey() == KEY_ESC) {
+            markWave();
+            return true;
         }
-        return true;
+
+        return false;
     }
 
     function markWave() {

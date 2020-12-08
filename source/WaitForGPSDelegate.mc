@@ -10,7 +10,7 @@ class WaitForGPSDelegate extends WatchUi.InputDelegate {
     }
 
     function onKey(keyEvent) {
-        if (keyEvent.getKey() == KEY_ENTER) {
+        if (keyEvent.getKey() == KEY_ENTER || keyEvent.getKey() == KEY_ESC) {
             WatchUi.switchToView(
                 new SurfTrackerView(accelData),
                 new SurfTrackerDelegate(accelData),
