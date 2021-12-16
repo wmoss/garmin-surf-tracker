@@ -19,7 +19,7 @@ class SurfTrackerDelegate extends WatchUi.InputDelegate {
     hidden var page;
 
     function initialize(accelData) {
-        BehaviorDelegate.initialize();
+        WatchUi.InputDelegate.initialize();
 
         self.accelData = accelData;
         accelData.start();
